@@ -2,7 +2,9 @@
 
 这是 华硕天选5Pro酷睿版 （具体型号ASUS FX607JV）  笔记本的 OpenCore EFI 配置，针对以下硬件和 macOS 使用场景整理。配置处于持续测试阶段，适合已经了解 OpenCore 和黑苹果基本操作的用户参考。
 
-> EFI 只建议在相同或相近硬件上测试。使用前请备份原系统 EFI、重要数据和 NVRAM 信息，并根据自己的硬件生成 SMBIOS 数据。
+> 对于其他设备：EFI 只建议在相同或相近硬件上测试。使用前请备份原系统 EFI 和重要数据。
+
+<img width="2560" height="1600" alt="IMG_20261023_211359" src="https://github.com/user-attachments/assets/eb06505a-2ba6-4c35-9439-2fcc9b8ec741" />
 
 ## 硬件信息
 

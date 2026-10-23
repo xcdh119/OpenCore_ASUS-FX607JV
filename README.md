@@ -59,23 +59,24 @@ CPU 最高睿频目前只能达到约 4.4 GHz，可能与大小核调度有关�
 
 1. 备份原系统 EFI、重要数据和 NVRAM。首次测试建议准备一个可用的 Windows 或 macOS 救援启动盘。
 2. 使用 GenSMBIOS 等工具生成自己的 `SystemSerialNumber`、`MLB`、`SystemUUID` 和 `ROM`，不要直接使用仓库中的设备信息。
-3. 按下方说明设置 MUX 独显直连、关闭安全启动与 VMD，并准备安装文件。
+3. 按下方说明设置独显直连、关闭安全启动与 VMD，并准备安装文件。
 4. 出现无法启动时，使用备份 EFI 恢复。
+5. 非i9-13980HX的CPU使用此EFI会卡进度条（`-v`debug情况下会卡码，仓库中的plist默认不启用跑码），相近的笔记本，需要重新定制ACPI，睿频补丁也需要重新生成。
 
 > **警告：不要使用 OCAT（OpenCore Auxiliary Tools）编辑或升级此 EFI。OCAT 可能造成配置数据丢失；即使数据库中的 OpenCore 版本已更新到与当前 EFI 相同的版本，也仍可能发生问题。**
 
-## 奥创控制中心 / G-Helper / BIOS 设置
+## 安装前的 BIOS 设置
 
-在奥创控制中心、G-Helper 或 BIOS 中，将显示模式切换为 **MUX 独显直连**。
+1. 在奥创控制中心、G-Helper 或 BIOS 中，将显示模式切换为 **独显直连（only dGPU）** （此笔记本支持MUX）。
 
-在 BIOS 中进行以下设置：
-
+2. 在 BIOS 中进行以下设置：
 - 使用 UEFI 启动模式。
 - 关闭安全启动（Secure Boot）。
 - 关闭 VMD。
 
-### 关闭 VMD 后 Windows 无法启动
+### 如果关闭 VMD 后 Windows 无法启动
 
+操作前请备份重要数据；启用 BitLocker 或设备加密时，请先保存恢复密钥，或直接关闭BitLocker。
 原有 Windows 如果依赖 VMD 存储控制器，直接关闭 VMD 可能导致无法启动。请先恢复 VMD，让 Windows 正常启动，再通过安全模式切换存储控制器：
 
 1. 重新开启 VMD，进入 Windows。
@@ -84,7 +85,7 @@ CPU 最高睿频目前只能达到约 4.4 GHz，可能与大小核调度有关�
 4. 重启时进入 BIOS，关闭 VMD，保存并重启。使用机型对应的 BIOS 快捷键。
 5. 在启动设置中选择安全模式。成功进入 Windows 后，正常重启，再检查存储控制器是否已切换为标准 NVM Express 控制器。
 
-如果切换后仍无法启动，请恢复原来的 VMD 设置。操作前备份重要数据；启用 BitLocker 或设备加密时，请先保存恢复密钥，或直接关闭BitLocker。
+如果切换后仍无法启动，请恢复原来的 VMD 设置，并尝试使用其他方法...
 
 ## 安装与使用
 

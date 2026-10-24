@@ -47,11 +47,11 @@
 
 ### 隔空投送
 
-隔空投送可以打开，但目前没有系统设置中的 Wi-Fi 支持，预计无法正常使用。无线网卡当前使用 `itlwm.kext + HeliPort.app` 方案；如需原生 Wi-Fi 功能，请更换免驱无线网卡，或尝试使用 OCLP 打补丁。
+隔空投送可以打开，如果无线网卡使用 `itlwm.kext + HeliPort.app` 方案可能不能用；目前已经支持原生 Wi-Fi 但是能不能用还没来得及测试，先把更新推送了。
 
 ### Apple 服务
 
-iMessage、FaceTime 和电话等 Apple 服务目前无法使用。即使添加了 `en0` 网卡，现阶段仍怀疑与 Wi-Fi 无法使用原生驱动有关，因此仅设置 `en0` 不能保证这些服务恢复。
+iMessage、FaceTime 和电话等 Apple 服务目前无法使用。即使添加了 `en0` 网卡，有时间了再想想别的方法。
 
 ### CPU 睿频
 
@@ -151,14 +151,16 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 ### macOS 在线恢复内的WiFi
 
 macOS 在线恢复目前需要连接 **有线网络**。当前尚未支持安卓手机 USB 网络共享，且尚不确定 macOS 26 是否可以使用安卓 USB 网络共享，因此不要将其作为在线恢复的网络方案。
+**10月24日傍晚更新：找到了原生 Wi-Fi 解决方法，已经应用到现在的OC中，在线恢复没测试但应该可以用了。**
 
 本机无线网卡需要进入已经安装好的 macOS 系统后，通过 `HeliPort` 工具联网；在线恢复环境中不能依赖 HeliPort 提供无线网络。恢复文件和 `BOOTx64.efi` 已放在 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)。
 
 ## Wi-Fi、EN0 与 Apple 服务
 
+**10月24日傍晚更新：找到了原生 Wi-Fi 解决驱动，已经应用到现在的OC中，但速率似乎不够，如果对网络速度有要求请去 plist 中关闭Airportltlwm，打开itlwm，启动参数删除 `itlwm_he=1` 保存重启后即可使用 HeliPort.app 的 Wi-Fi 功能。**
 `HeliPort.app` 已收录在 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)，进入系统后可下载安装并连接无线网络。
 
-本机无线网卡使用 `itlwm.kext + HeliPort.app`，因此不要把 HeliPort 的可用状态误认为 macOS 原生 Wi-Fi 已经工作。关于 `en0` 网卡的检查、添加和 ROM 设置方法，请参考另一份项目中的完整说明：
+本机无线网卡使用 `itlwm.kext + HeliPort.app` 和原生 Wi-Fi 方案，但不要把 HeliPort 的可用误认为 macOS 原生 Wi-Fi。关于 `en0` 网卡的检查、添加和 ROM 设置方法，请参考另一份项目中的完整说明：
 
 [OpenCore_HUANANZHI-X79-Q67_2690V2_RX570：EN0 网卡设置说明](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
 
@@ -188,3 +190,4 @@ macOS 在线恢复目前需要连接 **有线网络**。当前尚未支持安卓
 - [HeliPort](https://github.com/OpenIntelWireless/HeliPort)
 - [NVIDIA macOS Driver](https://github.com/nullmoth/nvidia-macos-driver)
 - [SimpleHDA](https://github.com/laobamac/SimpleHDA)
+- [itlwm (AirportItlwm 原生 Wi-Fi)](https://github.com/laobamac/itlwm)

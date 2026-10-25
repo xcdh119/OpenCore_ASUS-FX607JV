@@ -34,7 +34,7 @@
 				<key>Comment</key>
 				<string>32 Processor declarations + CPUFriend EPP data</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Path</key>
 				<string>SSDT-PLUG-CPUF.aml</string>
 			</dict>
@@ -42,7 +42,7 @@
 				<key>Comment</key>
 				<string></string>
 				<key>Enabled</key>
-				<false/>
+				<true/>
 				<key>Path</key>
 				<string>SSDT-MCHC.aml</string>
 			</dict>
@@ -50,7 +50,7 @@
 				<key>Comment</key>
 				<string></string>
 				<key>Enabled</key>
-				<false/>
+				<true/>
 				<key>Path</key>
 				<string>SSDT-PLUG-ALT.aml</string>
 			</dict>

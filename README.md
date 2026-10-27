@@ -39,11 +39,22 @@
 
 ### 睡眠
 
-睡眠功能目前无法正常使用。相关原因可能是显卡驱动缺少系统睡眠所需的 GPU 挂起、显存保存和恢复支持；截至目前使用的驱动版本仍未完全解决。部分较新的驱动版本虽然修复了一些睡眠问题，但本机仍无法正常睡眠，后续再继续研究。
+10月27日提交：睡眠没完全修复，能进入睡眠状态，但尝试从睡眠状态唤醒时就会出现秒重启的问题，如果连睡眠状态都进不去直接秒重启的话，在 macOS 终端中输入这些命令并回车：
+`
+sudo pmset autopoweroff 0
+sudo pmset powernap 0
+sudo pmset standby 0
+sudo pmset proximitywake 0
+sudo pmset tcpkeepalive 0
+sudo pmset hibernatemode 0
+sudo pmset tcpkeepalive 0
+sudo pmset ttyskeepawake 0
+sudo pmset womp 0
+`
 
 ### 解码
 
-硬件解码存在问题，部分软件无法使用硬件解码。需要硬件解码的应用可能退回软件解码或出现功能异常。
+硬件解码存在问题，NVIDIA 驱动原因，部分软件无法使用硬件解码。需要硬件解码的应用可能退回软件解码或出现功能异常。
 
 ### 隔空投送
 
@@ -51,11 +62,26 @@
 
 ### Apple 服务
 
-iMessage、FaceTime 和电话等 Apple 服务目前无法使用。即使添加了 `en0` 网卡，有时间了再想想别的方法。
+iMessage.app、FaceTime/电话.app无法使用。即使添加了 `en0` 网卡，待研究。
 
 ### CPU 睿频
 
-CPU 最高睿频经常卡在 4.4 GHz 的固定频率，可能与大小核调度有关。待研究。
+CPU 最高睿频似乎卡在 4.4 GHz 的固定频率，可能与大小核调度有关。待研究。
+
+### Wi-Fi
+
+这个 EFI 里放了两套无线网络方案：
+1. 使用 `itlwm.kext + HeliPort.app` ，但不要把 HeliPort 的可用误认为 macOS 原生 Wi-Fi。勾选 `itlwm.kext` 并取消勾选 `Airportltlwm.kext` ，启动参数删除 `itlwm_he=1` ，在系统内安装 app 即可。`HeliPort.app` 已收录在 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)
+2. 使用原生 Wi-Fi ，和方案1相反，但速率可能存在问题，以下是使用[测速网](https://www.speedtest.cn/)的测速结果（两台测速设备均在同一固定位置）：
+| 测速类型 | 地区 | 节点 | （上传,下载）Mbps |
+| --- | --- | --- | --- |
+| macOS 以太网 | 石家庄移动 | 河北省石家庄移动 | 112,1083 |
+| macOS Wi-Fi | 石家庄移动 | 河北省石家庄移动 | 120,36 |
+| macOS Wi-Fi | 石家庄电信 | 九天网络-电信 | 111,338 |
+| Win11 Wi-Fi | 石家庄移动 | 河北省石家庄移动 | 117,269 |
+| Win11 Wi-Fi | 石家庄电信 | 九天网络-电信 | 86,291 |
+| vivo Wi-Fi | 石家庄移动 | 河北省石家庄移动 | 116,667 |
+| vivo Wi-Fi | 石家庄电信 | 九天网络-电信 | 116,583 |
 
 ## 使用前准备
 
@@ -132,10 +158,6 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 如果仍选择无 U 盘安装，请先备份 EFI 分区和重要数据，再准备足够空间，将 `com.apple.recovery.boot` 放在分区根目录，与 `EFI` 文件夹同级，并在 BIOS 中添加对应的 UEFI 启动项。
 
-### 无法进入macOS在线恢复时
-
-如果使用本仓库 OC 无法启动恢复环境，可先换用备用 EFI。备用 EFI 就是使用的 nullmoth 的 Windows 端 1401 工具生成，也可以自行生成；相关工具与说明请参考 [NVIDIA macOS Driver 项目](https://github.com/nullmoth/nvidia-macos-driver)。
-
 ### 安装完成后
 
 系统安装完成后，先将本仓库 OC 内容放入电脑硬盘 EFI 分区的 `EFI/OC/`，保留配套的 `EFI/BOOT/BOOTx64.efi`，并在 BIOS 中添加对应启动项。确认可以从硬盘正常进入 macOS 后，再进行显卡驱动安装。
@@ -149,38 +171,11 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 驱动版本请从 [nvidia-macos-driver Releases](https://github.com/nullmoth/nvidia-macos-driver/releases) 选择。安装或更新驱动前请保留可用的硬盘 EFI 和备用启动介质，避免驱动异常时无法进入系统。
 
-### 睡眠
-
-截止到10月27日，睡眠没完全修复，能进入睡眠状态，但尝试从睡眠状态唤醒时就会出现秒重启的问题，如果连睡眠状态都进不去直接秒重启的话，在macOS终端中输入这些命令并回车：
-`
-sudo pmset autopoweroff 0
-sudo pmset powernap 0
-sudo pmset standby 0
-sudo pmset proximitywake 0
-sudo pmset tcpkeepalive 0
-sudo pmset hibernatemode 0
-sudo pmset tcpkeepalive 0
-sudo pmset ttyskeepawake 0
-sudo pmset womp 0
-`
-
-### macOS 在线恢复内的WiFi
-
-macOS 在线恢复目前需要连接 **有线网络**。当前尚未支持安卓手机 USB 网络共享，且尚不确定 macOS 26 是否可以使用安卓 USB 网络共享，因此不要将其作为在线恢复的网络方案。
-**10月24日傍晚更新：找到了原生 Wi-Fi 解决方法，已经应用到现在的OC中，在线恢复没测试但应该可以用了。**
-
-本机无线网卡需要进入已经安装好的 macOS 系统后，通过 `HeliPort` 工具联网；在线恢复环境中不能依赖 HeliPort 提供无线网络。恢复文件和 `BOOTx64.efi` 已放在 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)。
-
 ## Wi-Fi、EN0 与 Apple 服务
-
-**10月24日傍晚更新：找到了原生 Wi-Fi 解决驱动，已经应用到现在的OC中，但速率似乎不够，如果对网络速度有要求请去 plist 中关闭Airportltlwm，打开itlwm，启动参数删除 `itlwm_he=1` 保存重启后即可使用 HeliPort.app 的 Wi-Fi 功能。**
-`HeliPort.app` 已收录在 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)，进入系统后可下载安装并连接无线网络。
-
-本机无线网卡使用 `itlwm.kext + HeliPort.app` 和原生 Wi-Fi 方案，但不要把 HeliPort 的可用误认为 macOS 原生 Wi-Fi。关于 `en0` 网卡的检查、添加和 ROM 设置方法，请参考另一份项目中的完整说明：
 
 [OpenCore_HUANANZHI-X79-Q67_2690V2_RX570：EN0 网卡设置说明](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
 
-即使完成 `en0` 设置，Apple 服务仍可能因为无线网卡驱动、系统版本或其他硬件条件无法使用。
+即使完成 `en0` 设置并更换了设备序列号，Apple 服务仍可能无法使用。
 
 ## 文件说明
 

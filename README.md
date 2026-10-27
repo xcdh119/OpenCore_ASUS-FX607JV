@@ -149,6 +149,21 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 驱动版本请从 [nvidia-macos-driver Releases](https://github.com/nullmoth/nvidia-macos-driver/releases) 选择。安装或更新驱动前请保留可用的硬盘 EFI 和备用启动介质，避免驱动异常时无法进入系统。
 
+### 睡眠
+
+截止到10月27日，睡眠没完全修复，能进入睡眠状态，但尝试从睡眠状态唤醒时就会出现秒重启的问题，如果连睡眠状态都进不去直接秒重启的话，在macOS终端中输入这些命令并回车：
+`
+sudo pmset autopoweroff 0
+sudo pmset powernap 0
+sudo pmset standby 0
+sudo pmset proximitywake 0
+sudo pmset tcpkeepalive 0
+sudo pmset hibernatemode 0
+sudo pmset tcpkeepalive 0
+sudo pmset ttyskeepawake 0
+sudo pmset womp 0
+`
+
 ### macOS 在线恢复内的WiFi
 
 macOS 在线恢复目前需要连接 **有线网络**。当前尚未支持安卓手机 USB 网络共享，且尚不确定 macOS 26 是否可以使用安卓 USB 网络共享，因此不要将其作为在线恢复的网络方案。

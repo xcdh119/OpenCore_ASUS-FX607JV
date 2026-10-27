@@ -73,7 +73,8 @@ CPU 最高睿频似乎卡在 4.4 GHz 的固定频率，可能与大小核调度�
 这个 EFI 里放了两套无线网络方案：
 1. 使用 `itlwm.kext + HeliPort.app` ，但不要把 HeliPort 的可用误认为 macOS 原生 Wi-Fi。勾选 `itlwm.kext` 并取消勾选 `Airportltlwm.kext` ，启动参数删除 `itlwm_he=1` ，在系统内安装 app 即可。`HeliPort.app` 已收录在 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)
 2. 使用原生 Wi-Fi ，和方案1相反，但速率可能存在问题，以下是使用[测速网](https://www.speedtest.cn/)的测速结果（两台测速设备均在同一固定位置）：
-| 测速类型 | 地区 | 节点 | （上传,下载）Mbps |
+
+| 测速类型 | 地区 | 节点 | 上传,下载 (Mbps) |
 | --- | --- | --- | --- |
 | macOS 以太网 | 石家庄移动 | 河北省石家庄移动 | 112,1083 |
 | macOS Wi-Fi | 石家庄移动 | 河北省石家庄移动 | 120,36 |

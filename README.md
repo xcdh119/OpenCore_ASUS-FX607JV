@@ -40,7 +40,7 @@
 ### 睡眠
 
 10月27日提交：睡眠没完全修复，能进入睡眠状态，但尝试从睡眠状态唤醒时就会出现秒重启的问题，如果连睡眠状态都进不去直接秒重启的话，在 macOS 终端中输入这些命令并回车：
-`
+```bash
 sudo pmset autopoweroff 0
 sudo pmset powernap 0
 sudo pmset standby 0
@@ -50,7 +50,7 @@ sudo pmset hibernatemode 0
 sudo pmset tcpkeepalive 0
 sudo pmset ttyskeepawake 0
 sudo pmset womp 0
-`
+```
 
 ### 解码
 
@@ -172,6 +172,8 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 驱动版本请从 [nvidia-macos-driver Releases](https://github.com/nullmoth/nvidia-macos-driver/releases) 选择。安装或更新驱动前请保留可用的硬盘 EFI 和备用启动介质，避免驱动异常时无法进入系统。
 
+**10月29日：从 [NVIDIA driver 2.6.3](https://github.com/nullmoth/nvidia-macos-driver/releases/tag/v2.6.3) 版本起需要关闭 FX607PanelSize.kext 这个驱动才能正常使用独显内屏，这个驱动原本是用于修复 HiDPI 和显示器尺寸识别的，现在 nullmoth 已修复此问题，启用这个驱动并使用了 2.6.3 及以后版本的驱动会出现内屏卡 AppleLogo 的问题。**
+
 ## Wi-Fi、EN0 与 Apple 服务
 
 [OpenCore_HUANANZHI-X79-Q67_2690V2_RX570：EN0 网卡设置说明](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
@@ -186,7 +188,7 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 - `Tools/`：OpenCore 工具组件。
 - `config.plist`：本 EFI 的 OpenCore 配置文件。
 
-修改 `config.plist` 可使用 **OpenCore Configurator.app** 或 ProperTree，其中 OpenCore Configurator.app 更适合本项目的图形化操作。修改前请备份原配置，并在修改后使用 `ocvalidate` 检查配置。更新 Kext 或 OpenCore 后，应重新验证配置和启动参数。
+修改 `config.plist` 可使用 OpenCore Configurator.app 或 ProperTree，其中 **OpenCore Configurator.app** 更适合本项目的图形化操作。修改前请备份原配置，并在修改后使用 `ocvalidate` 检查配置。更新 Kext 或 OpenCore 后，应重新验证配置和启动参数。
 
 ## 免责声明
 

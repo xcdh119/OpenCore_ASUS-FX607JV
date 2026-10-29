@@ -577,7 +577,7 @@
 				<key>Comment</key>
 				<string>V0.3.0 | FX607 panel physical-size correction only (1.15 compatible, no scaling diagnostics)</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>ExecutablePath</key>
 				<string>Contents/MacOS/FX607PanelSize</string>
 				<key>MaxKernel</key>

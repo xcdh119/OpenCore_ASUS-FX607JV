@@ -174,11 +174,11 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 **10月29日：从 [NVIDIA driver 2.6.3](https://github.com/nullmoth/nvidia-macos-driver/releases/tag/v2.6.3) 版本起需要关闭 FX607PanelSize.kext 这个驱动才能正常使用独显内屏，这个驱动原本是用于修复 HiDPI 和显示器尺寸识别的，现在 nullmoth 已修复此问题，启用这个驱动并使用了 2.6.3 及以后版本的驱动会出现内屏卡 AppleLogo 的问题。**
 
-## Wi-Fi、EN0 与 Apple 服务
+## Wi-Fi、EN0 与 iMessage/FaceTime
 
 [OpenCore_HUANANZHI-X79-Q67_2690V2_RX570：EN0 网卡设置说明](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
 
-即使完成 `en0` 设置并更换了设备序列号，Apple 服务仍可能无法使用。
+即使完成 `en0` 设置并更换了设备序列号，iMessage/FaceTime/电话仍可能无法使用。
 
 ## 文件说明
 

@@ -177,8 +177,11 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 ## Wi-Fi、EN0 与 iMessage/FaceTime
 
 [OpenCore_HUANANZHI-X79-Q67_2690V2_RX570：EN0 网卡设置说明](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
-
 即使完成 `en0` 设置并更换了设备序列号，iMessage/FaceTime/电话仍可能无法使用。
+
+**特别注意：如果无手机号支持 iMessage 且使用的是邮箱登陆，给朋友发消息时请确认他/她的 iCloud 通讯录有存留你的登陆用的 AppleID 邮箱，否则你发出的消息会被 Apple 判定为骚扰信息导致限制登陆！**
+
+黑苹果设置好后仍无法登陆请尝试使用此网站解封：[iMessage 信息或 FaceTime 通话激活失败](https://apple.co/IMFT-mac) 。**但请注意：你在 OpenCore Configurator 工具里生成的序列号必须是有效的可以在 Apple 官网查得到的，才可以尝试解封。**
 
 ## 文件说明
 
@@ -203,5 +206,5 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 - [itlwm](https://github.com/OpenIntelWireless/itlwm)
 - [HeliPort](https://github.com/OpenIntelWireless/HeliPort)
 - [NVIDIA macOS Driver](https://github.com/nullmoth/nvidia-macos-driver)
-- [SimpleHDA](https://github.com/laobamac/SimpleHDA)
+- [SimpleHDA（2.7.0版本的驱动修复了macOS26的声音，此驱动已不再使用）](https://github.com/laobamac/SimpleHDA)
 - [itlwm (AirportItlwm 原生 Wi-Fi)](https://github.com/laobamac/itlwm)

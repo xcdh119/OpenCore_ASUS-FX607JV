@@ -91,9 +91,9 @@ sudo pmset womp 0
 操作前请备份重要数据；启用 BitLocker 或设备加密时，请先保存恢复密钥，最好直接关了BitLocker，这东西没吊用。
 原有 Windows 如果依赖 VMD 存储控制器，直接关闭 VMD 可能导致无法启动。请先恢复 VMD，让 Windows 正常启动，再通过安全模式切换存储控制器：
 
-1. 重新开启 VMD，进入 Windows，打开设备管理器，找到存储控制器，把VMD相关的卸载掉（注意是卸载设备，不要卸载驱动！！！）。
+1. 重新开启 VMD，进入 Windows，打开设备管理器，找到`存储控制器`，把 VMD 相关的卸载掉（注意是卸载设备，不要卸载驱动！！！）。
 2. 在开始菜单的电源选项中，按住 Shift 并点击“重启”，进入高级启动菜单。
-3. 依次选择“疑难解答”→“高级选项”→“启动设置”→“重启”。
+3. 依次选择`疑难解答` → `高级选项` → `启动设置` → `重启`。
 4. 重启时进入 BIOS，关闭 VMD，保存并重启。使用机型对应的 BIOS 快捷键。
 5. 在启动设置中选择安全模式。成功进入 Windows 后，正常重启，再检查存储控制器是否已切换为标准 NVM Express 控制器。
 
@@ -139,17 +139,17 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 如果仍选择无 U 盘安装，请先备份 EFI 分区和重要数据，再准备足够空间，将 `com.apple.recovery.boot` 放在分区根目录，与 `EFI` 文件夹同级，并在 BIOS 中添加对应的 UEFI 启动项。
 
-重启安装 macOS 前请提前在 Windows 系统内使用分区工具给 macOS 划分一块儿你想安装的分区，设置好大小，然后建立新分区，文件系统类型选择 "Mac OS X Apple APFS"，点击确定保存好，
+重启安装 macOS 前请提前在 Windows 系统内使用分区工具给 macOS 划分一块儿你想安装的分区，设置好大小，然后`建立新分区`，`文件系统类型`选择 `Mac OS X Apple APFS`，点击`确定`，保存好，
 
 <img width="1280" height="800" alt="屏幕截图 2026-11-08 150338" src="https://github.com/user-attachments/assets/5262b777-c8d2-460c-a8b6-dc0b8727285b" />
 
-重启系统进入 BIOS 设置好U盘为第一启动项，保存 BIOS 设置，重启就会直接进入 OC 引导，macOS Recovery 中打开磁盘工具把刚才在Windows端创建的APFS分区再抹掉一边即可开始安装。
+重启系统进入 BIOS 设置好U盘为第一启动项，保存 BIOS 设置，重启就会直接进入 OC 引导，macOS Recovery 中打开磁盘工具把刚才在 Windows 端创建的 APFS 分区再抹掉一边即可开始安装。
 
 安装过程中 macOS 会多次重启。
 
 ### 安装完成后
 
-(**可选**) 系统安装完成后，先将本仓库 OC 内容放入电脑硬盘 EFI 分区的 `EFI/OC/`，保留配套的 `EFI/BOOT/BOOTx64.efi`，并在 BIOS 中添加对应启动项。
+系统安装完成后，开机引导设置页面先不要登陆 Apple 账户，(**可选**) 先将本仓库 OC 内容放入电脑硬盘 EFI 分区的 `EFI/OC/`，保留配套的 `EFI/BOOT/BOOTx64.efi`，并在 BIOS 中添加对应启动项。
 
 ### NVIDIA 显示驱动
 
@@ -162,15 +162,27 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 **10月29日：从 [NVIDIA driver 2.6.3](https://github.com/nullmoth/nvidia-macos-driver/releases/tag/v2.6.3) 版本起需要关闭 FX607PanelSize.kext 这个驱动才能正常使用独显内屏，这个驱动原本是用于修复 HiDPI 和显示器尺寸识别的，现在 nullmoth 已修复此问题，启用这个驱动并使用了 2.6.3 及以后版本的驱动会出现内屏卡 AppleLogo 的问题。**
 
-## iMessage / FaceTime / Phone(macOS26)
+## iMessage / FaceTime
 
-[OpenCore_HUANANZHI-X79-Q67_2690V2_RX570：EN0 网卡设置说明](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
-即使完成 `en0` 设置并更换了设备序列号，iMessage/FaceTime/电话仍可能无法使用。
+在 macOS 使用 OCC 工具打开自己引导里的 `config.plist`，`PlatformInfo` → `DataHub - Generic - PlatformNVRAM`
 
-**特别注意：如果无手机号支持 iMessage 且使用的是邮箱登陆，给朋友发消息时请确认他/她的 iCloud 通讯录有存留你的登陆用的 AppleID 邮箱，否则你发出的消息会被 Apple 判定为骚扰信息导致限制登陆！**
+<img width="1728" height="1117" alt="image" src="https://github.com/user-attachments/assets/e1626867-552f-4628-8230-b9637f00b834" />
 
-黑苹果设置好后仍无法登陆请尝试使用此网站解封：[iMessage 信息或 FaceTime 通话激活失败](https://apple.co/IMFT-mac) 。**但请注意：你在 OpenCore Configurator（简称 OCC 工具） 工具里生成的序列号必须是有效的可以在 Apple 官网查得到的，才可以尝试解封。** 
-11月8日：OCC 工具已经上传到了 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)
+如果无法生成就点击下面黄圈里的机型重新选择一次 `MacBookPro16,1` 
+
+ProcessorType 如果生成后变成`1793`了就改回`3841`，否则不显示 OC 引导预设的 CPU 名称
+
+ROM 右边的红圈：选择`来自系统` → `Mac` → `生成`
+
+System Serial Number 中的序列号必须可以在 Apple 官网的 [查看设备保障状态和相关权益](https://checkcoverage.apple.com/) 中可以查到才行，查不到就一直生成除非你不想用iMessage和FaceTime了。
+
+紧接着是 `en0` 网卡确认与写入到 OC ，请在这个项目里找： [OpenCore_HUANANZHI-X79-Q67_2690V2_RX570](https://github.com/xcdh119/OpenCore_HUANANZHI-X79-Q67_2690V2_RX570)
+
+**如果无手机号支持 iMessage 且使用的是邮箱登陆，给朋友发消息时请确认他/她的 iCloud 通讯录有存留你的登陆用的 AppleID 邮箱，否则你发出的消息会被 Apple 判定为骚扰信息导致限制登陆！**
+
+黑苹果设置好后仍无法登陆请尝试使用此网站解除限制登陆：[iMessage 信息或 FaceTime 通话激活失败](https://apple.co/IMFT-mac)  说明自己为什么无法登陆时不要提到黑苹果。**但请注意：你在 OpenCore Configurator（简称 OCC 工具） 工具里生成的序列号必须是有效的可以在 Apple 官网查得到的，才可以尝试解封否则最好还是别去乱申请。** 11月8日：OCC 工具已经上传到了 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)
+
+**声明：即使都这样设置过了也不能保证这两个 iCloud 服务绝对可用...**
 
 ## 文件说明
 
@@ -185,7 +197,6 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 ## 免责声明
 
 适用所有 i9-13980HX 版本的 华硕天选5Pro 机型，不保证适用于除 FX607JV 之外其他所有 天选5 系列或其他天选相近型号。睡眠、硬件解码问题目前仍未完全解决。
-部分内容由 AI 协助整理，可能存在疏漏或错误，请谅解，并以实际硬件、系统表现和项目最新说明为准。
 
 ## 相关项目
 

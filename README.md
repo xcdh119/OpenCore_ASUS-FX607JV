@@ -76,7 +76,9 @@ sudo pmset womp 0
 4. 相近的笔记本，可能需要重新定制ACPI，睿频补丁也可能需要重新生成。
 5. `-v`debug跑码，仓库中的plist默认不启用跑码。
 
-> **警告：不要使用 OCAT（OpenCore Auxiliary Tools）编辑或升级此 EFI。OCAT 可能造成配置数据丢失；即使数据库中的 OpenCore 版本已更新到与当前 EFI 相同的版本，也仍可能发生问题。**
+> **警告：不要使用 OCAT（OpenCore Auxiliary Tools）编辑或升级此 EFI。OCAT 可能造成配置数据丢失；即使数据库中的 OpenCore 版本已更新到与当前 EFI 相同的版本，也仍可能发生问题，如果在 Windows 端修改 plist 则建议使用 ProperTree ，macOS 端建议使用 OpenCore Configurator工具（本文档中简称 OCC）**
+
+11月8日：OCC 工具已经上传到了 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)
 
 ## 安装前的 BIOS 设置
 
@@ -160,7 +162,7 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 
 驱动版本请从 [nvidia-macos-driver Releases](https://github.com/nullmoth/nvidia-macos-driver/releases) 选择。安装或更新驱动前请保留可用的硬盘 EFI 和备用启动介质，避免驱动异常时无法进入系统。
 
-**10月29日：从 [NVIDIA driver 2.6.3](https://github.com/nullmoth/nvidia-macos-driver/releases/tag/v2.6.3) 版本起需要关闭 FX607PanelSize.kext 这个驱动才能正常使用独显内屏，这个驱动原本是用于修复 HiDPI 和显示器尺寸识别的，现在 nullmoth 已修复此问题，启用这个驱动并使用了 2.6.3 及以后版本的驱动会出现内屏卡 AppleLogo 的问题。**
+**10月29日：从 [NVIDIA driver 2.6.3](https://github.com/nullmoth/nvidia-macos-driver/releases/tag/v2.6.3) 版本起需要关闭 FX607PanelSize.kext 这个驱动才能正常使用独显内屏，这个驱动原本是用于修复 HiDPI 和显示器尺寸识别的，现在 nullmoth 已修复此问题，启用这个驱动并使用了 2.6.3 及以后版本的驱动会出现内屏卡 AppleLogo 的问题，目前仓库里的 OC 已经关闭了这个Kext。**
 
 ## iMessage / FaceTime
 
@@ -180,23 +182,15 @@ System Serial Number 中的序列号必须可以在 Apple 官网的 [查看设�
 
 **如果无手机号支持 iMessage 且使用的是邮箱登陆，给朋友发消息时请确认他/她的 iCloud 通讯录有存留你的登陆用的 AppleID 邮箱，否则你发出的消息会被 Apple 判定为骚扰信息导致限制登陆！**
 
-黑苹果设置好后仍无法登陆请尝试使用此网站解除限制登陆：[iMessage 信息或 FaceTime 通话激活失败](https://apple.co/IMFT-mac)  说明自己为什么无法登陆时不要提到黑苹果。**但请注意：你在 OpenCore Configurator（简称 OCC 工具） 工具里生成的序列号必须是有效的可以在 Apple 官网查得到的，才可以尝试解封否则最好还是别去乱申请。** 11月8日：OCC 工具已经上传到了 [SoftwarePackage 发布页](https://github.com/xcdh119/OpenCore_ASUS-FX607JV/releases/tag/SoftwarePackage)
+黑苹果设置好后仍无法登陆请尝试使用此网站解除限制登陆：[iMessage 信息或 FaceTime 通话激活失败](https://apple.co/IMFT-mac)  说明自己为什么无法登陆时不要提到黑苹果。**但请注意：你在 OCC 工具里生成的序列号必须是有效的可以在 Apple 官网查得到的，才可以尝试解封否则最好还是别去乱申请。**
 
 **声明：即使都这样设置过了也不能保证这两个 iCloud 服务绝对可用...**
-
-## 文件说明
-
-- `ACPI/`：处理电源管理、设备识别、USB 和平台兼容性的 SSDT。
-- `Kexts/`：网络、声卡、蓝牙、触控板、CPU、电源管理和其他硬件驱动。
-- `Drivers/`：OpenCore 启动所需的 UEFI 驱动。
-- `Tools/`：OpenCore 工具组件。
-- `config.plist`：本 EFI 的 OpenCore 配置文件。
 
 修改 `config.plist` 可使用 OCC 或 ProperTree，其中 **OCC** 更适合本项目的图形化操作。修改前请备份原配置，并在修改后使用 `ocvalidate` 检查配置。更新 Kext 或 OpenCore 后，应重新验证配置和启动参数。
 
 ## 免责声明
 
-适用所有 i9-13980HX 版本的 华硕天选5Pro 机型，不保证适用于除 FX607JV 之外其他所有 天选5 系列或其他天选相近型号。睡眠、硬件解码问题目前仍未完全解决。
+适用于 i9-13980HX 版本的 华硕天选5Pro 机型，不保证适用于除 FX607JV 之外其他所有 天选5 系列或其他天选相近型号。睡眠、硬件解码问题目前仍未完全解决。如果折腾黑苹果时造成硬件问题本人概不负责！（不要使用早期1.x版本的n卡驱动，可能会造成显卡硬件异常，现在的2.x开始的版本驱动正常情况也不会出问题，只要别作死别经常强制重启就行）
 
 ## 相关项目
 

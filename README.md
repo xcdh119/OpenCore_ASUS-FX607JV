@@ -140,19 +140,22 @@ U 盘根目录或用于无 U 盘安装的 EFI 分区根目录，按以下层级�
 如果仍选择无 U 盘安装，请先备份 EFI 分区和重要数据，再准备足够空间，将 `com.apple.recovery.boot` 放在分区根目录，与 `EFI` 文件夹同级，并在 BIOS 中添加对应的 UEFI 启动项。
 
 重启安装 macOS 前请提前在 Windows 系统内使用分区工具给 macOS 划分一块儿你想安装的分区，设置好大小，然后建立新分区，文件系统类型选择 "Mac OS X Apple APFS"，点击确定保存好，
+
 <img width="1280" height="800" alt="屏幕截图 2026-11-08 150338" src="https://github.com/user-attachments/assets/5262b777-c8d2-460c-a8b6-dc0b8727285b" />
 
-重启系统进入 BIOS 设置好U盘为第一启动项保存重启就会直接进入 OC 引导，安装过程中 macOS 会多次重启。
+重启系统进入 BIOS 设置好U盘为第一启动项，保存 BIOS 设置，重启就会直接进入 OC 引导，macOS Recovery 中打开磁盘工具把刚才在Windows端创建的APFS分区再抹掉一边即可开始安装。
+
+安装过程中 macOS 会多次重启。
 
 ### 安装完成后
 
-（可选）系统安装完成后，先将本仓库 OC 内容放入电脑硬盘 EFI 分区的 `EFI/OC/`，保留配套的 `EFI/BOOT/BOOTx64.efi`，并在 BIOS 中添加对应启动项。确认可以从硬盘正常进入 macOS 后，再进行显卡驱动安装。
+(**可选**) 系统安装完成后，先将本仓库 OC 内容放入电脑硬盘 EFI 分区的 `EFI/OC/`，保留配套的 `EFI/BOOT/BOOTx64.efi`，并在 BIOS 中添加对应启动项。
 
 ### NVIDIA 显示驱动
 
 本机黑苹果显示驱动由 [nvidia-macos-driver](https://github.com/nullmoth/nvidia-macos-driver/releases) 项目提供。驱动有两种安装方式：
 
-1. **DMG 安装**：在 macOS 中打开对应版本的 DMG 安装包。使用 1401app 打驱动前，建议先把 OC 放到电脑硬盘的 EFI 分区；如果 OC 只放在 U 盘或其他外部介质中，驱动无法正常安装或打入系统。
+1. **DMG 安装**：在 macOS 中打开对应版本的 DMG 安装包。使用 1401app 打驱动前，**建议**先把 OC 放到电脑硬盘的 EFI 分区；如果 OC 只放在 U 盘或其他外部介质中，驱动无法正常安装或打入系统。
 2. **手动安装**：下载 `nullmoth-nvidia-{版本}.tar.gz`，解压后按照项目说明手动复制和安装驱动文件。文件名中的 `{版本}` 替换为实际版本号。
 
 驱动版本请从 [nvidia-macos-driver Releases](https://github.com/nullmoth/nvidia-macos-driver/releases) 选择。安装或更新驱动前请保留可用的硬盘 EFI 和备用启动介质，避免驱动异常时无法进入系统。
